@@ -1,5 +1,4 @@
 import itertools
-import random
 
 # Class representing a card in the SET game
 class SetCards:
@@ -57,4 +56,7 @@ def find_one_set(cards):
             return (card_1, card_2, card_3) 
     
     return None
+
+
+
 

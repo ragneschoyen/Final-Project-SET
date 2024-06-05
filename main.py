@@ -46,7 +46,7 @@ def find_all_sets(cards):
 
     return sets_found
 
-# Function to find one (fist) set
+# Function to find one (first) set
 def find_one_set(cards):
     combinations = itertools.combinations(cards, 3)
 
@@ -57,6 +57,8 @@ def find_one_set(cards):
             return (card_1, card_2, card_3) 
     
     return None
+
+
 
 
 

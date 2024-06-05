@@ -15,9 +15,9 @@ class SetCards:
         # Define equality comparison between two cards based on their properties
         return (self.number == other.number and
                 self.symbol == other.symbol and
-                self.color == other.color and
+                self.color == other.color and     #KAN EVT DROPPAS ????????
                 self.shading == other.shading)
-
+    
 
 # Function for checking if three cards is a set 
 def is_set(card_1, card_2, card_3):
@@ -29,12 +29,5 @@ def is_set(card_1, card_2, card_3):
         if not (value_1 == value_2 == value_3 or (value_1 != value_2 and value_2 != value_3 and value_1 != value_3)):
             return False
     return True
-
-
-
-
-
-
-
 
 

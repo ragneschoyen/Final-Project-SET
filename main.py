@@ -1,3 +1,4 @@
+# Class representing a card in the SET game
 class SetCards:
     # Initialize the card with four properties: number, symbol, color, and shading
     def __init__(self, number, symbol, color, shading):
@@ -16,6 +17,7 @@ class SetCards:
                 self.symbol == other.symbol and
                 self.color == other.color and
                 self.shading == other.shading)
+
 
 
 

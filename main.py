@@ -1,5 +1,6 @@
 import itertools
 
+
 # Class representing a card in the SET game
 class SetCards:
     # Initialize the card with four properties: number, symbol, color, and shading

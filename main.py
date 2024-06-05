@@ -1,3 +1,5 @@
+import itertools
+
 # Class representing a card in the SET game
 class SetCards:
     # Initialize the card with four properties: number, symbol, color, and shading
@@ -29,5 +31,20 @@ def is_set(card_1, card_2, card_3):
         if not (value_1 == value_2 == value_3 or (value_1 != value_2 and value_2 != value_3 and value_1 != value_3)):
             return False
     return True
+
+# Function to find all sets
+def find_all_sets(cards):
+    sets_found = []
+    combinations = itertools.combinations(cards, 3)
+
+    for combo in combinations:
+        card_1, card_2, card_3 = combo
+
+        if is_set(card_1, card_2, card_3):
+            sets_found.append((card_1, card_2, card_3))
+
+    return sets_found
+
+
 
 

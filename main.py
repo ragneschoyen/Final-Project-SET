@@ -19,5 +19,22 @@ class SetCards:
                 self.shading == other.shading)
 
 
+# Function for checking if three cards is a set 
+def is_set(card_1, card_2, card_3):
+    for attribute in ['number', 'symbol', 'color', 'shading']:
+        value_1 = getattr(card_1, attribute)
+        value_2 = getattr(card_2, attribute)
+        value_3 = getattr(card_3, attribute)
+
+        if not (value_1 == value_2 == value_3 or (value_1 != value_2 and value_2 != value_3 and value_1 != value_3)):
+            return False
+    return True
+
+
+
+
+
+
+
 
 

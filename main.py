@@ -1,5 +1,4 @@
 import itertools
-import pygame
 
 # Class representing a card in the SET game
 class SetCards:

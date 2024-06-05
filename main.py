@@ -1,4 +1,5 @@
 import itertools
+import random
 
 # Class representing a card in the SET game
 class SetCards:
@@ -45,6 +46,15 @@ def find_all_sets(cards):
 
     return sets_found
 
+# Function to find one (fist) set
+def find_one_set(cards):
+    combinations = itertools.combinations(cards, 3)
 
+    for combo in combinations:
+        card_1, card_2, card_3 = combo
 
+        if is_set(card_1, card_2, card_3):
+            return (card_1, card_2, card_3) 
+    
+    return None
 

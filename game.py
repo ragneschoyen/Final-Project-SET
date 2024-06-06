@@ -29,7 +29,7 @@ if __name__ == "__main__":
     window = pygame.display.set_mode((400, 300))
     clock = pygame.time.Clock()
     
-    timer = CountdownTimer(10, game_over)
+    timer = CountdownTimer(30, game_over)
 
     running = True
     while running:

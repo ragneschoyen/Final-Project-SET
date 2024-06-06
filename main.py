@@ -3,7 +3,6 @@ import pygame
 import os
 
 
-
 # Class representing a card in the SET game
 class SetCards:
     # Initialize the card with four properties: number, symbol, color, and shading
@@ -16,7 +15,7 @@ class SetCards:
 
     def __repr__(self): 
         # Return a string representation of the card
-        return f"Card({self.color}, {self.symbol}, {self.shading}, {self.number})"
+        return f"Card({self.color}, {self.symbol}, {self.shading}, {self.number}, {self.image_name})"
     
     def __eq__(self, other):
         # Define equality comparison between two cards based on their properties
@@ -62,27 +61,49 @@ def find_one_set(cards):
     
     return None
 
-def create_all_cards():
+
+# generate image names 
+def create_image_name():
     colors = ['red', 'green', 'purple']
     shapes = ['oval', 'diamond', 'squiggle']
     shadings = ['filled', 'shaded', 'empty']
     numbers = [1, 2, 3]
 
     combinations = list(itertools.product(colors, shapes, shadings, numbers))
-    image_names = [f"{color}{shape}{shade}{number}.gif" for color, shape, shade, number in combinations]
+    image_names = [(color, shape, shading, number, f"{color}{shape}{shading}{number}.gif") for color, shape, shading, number in combinations]
     return image_names
 
-image_names = create_all_cards()
-for name in image_names:
-    print(name)
+# generate the actual cards with the image names 
+def create_all_cards():
+    image_data = create_image_name()
+    all_cards = []
 
-
-
-   
-
-
+    for color, shape, shading, number, image_name in image_data:
+        card =  SetCards(color, shape, shading, number, image_name)
+        all_cards.append(card)
     
+    return all_cards
 
+
+"""# Load card images
+def load_card_images(cards):
+    card_images = {}
+    for card in cards:
+        try:
+            card_images[card.image_name] = pygame.image.load(f"kaarten/{card.image_name}")
+        except pygame.error as e:
+            print(f"Error loading image {card.image_name}: {e}")
+    return card_images
+
+# Create all cards
+all_cards = create_all_cards()
+
+# Print all cards to verify they have the correct image names
+for card in all_cards:
+    print(card)
+
+# Load all card images
+card_images = load_card_images(all_cards)"""
 
 
 

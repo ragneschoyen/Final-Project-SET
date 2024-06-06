@@ -26,7 +26,7 @@ class Game:
     def __init__(self):
         pygame.init()
 
-        self.screen_width = 600  # Fixed typo: 'screen_with' to 'screen_width'
+        self.screen_width = 800  # Fixed typo: 'screen_with' to 'screen_width'
         self.screen_height = 600
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         pygame.display.set_caption("SET Game")
@@ -37,11 +37,26 @@ class Game:
         self.card_objects = []
 
         self.timer = CountdownTimer(30, self.game_over)
+        self.player_score = 0
+        self.computer_score = 0
+        self.font = pygame.font.SysFont(None, 40)
 
     def game_over(self):
         print("Game Over!")
         pygame.quit()
         exit()
+
+    def timer_expired(self):
+        sets_found = set_game.find_all_sets(self.selected_cards)
+        if sets_found:
+            self.computer_score += 1
+        else: 
+            for i in range(3):
+                self.selected_cards[i] = random.choice(self.all_cards)
+        
+        self.timer = CountdownTimer(30, self.timer_expired)
+        self.draw_cards()
+
 
     def select_random_cards(self, num_cards=12):
         self.selected_cards = random.sample(self.all_cards, num_cards)
@@ -74,8 +89,17 @@ class Game:
 
             # Blit (draw) the card image onto the screen at the calculated position
             self.screen.blit(card_image, (x, y))
+
+            # Draw card number
+            card_number = self.font.render(str(i + 1), True, (0, 0, 0))
+            self.screen.blit(card_number, (x, y))
+
+
         
         self.timer.draw(self.screen)
+        score_text = self.font.render(f"Player: {self.player_score}  Computer: {self.computer_score}", True, (0, 0, 0))
+        self.screen.blit(score_text, (10, 50))
+
 
         # Update display
         pygame.display.flip()
@@ -85,10 +109,38 @@ class Game:
         sets_found = set_game.find_all_sets(self.selected_cards)
         if sets_found:
             print("Sets found:")
-            for i, sets_found in enumerate(sets_found):
-                print(f"Set {i + 1}: {sets_found}")
+            for i, set_found in enumerate(sets_found):
+                print(f"Set {i + 1}: {set_found}")
         else:
             print("No sets found.")
+
+
+#############
+
+    def get_user_input(self):
+        user_input = input("Enter a set (e.g., '1, 5, 10'): ")
+        try:
+            indices = [int(i) - 1 for i in user_input.split(',')]
+            if len(indices) != 3:
+                print("Please enter exactly three numbers.")
+                return False
+            selected_cards = [self.selected_cards[i] for i in indices]
+            if set_game.is_set(*selected_cards):
+                print("Correct! You've found a set.")
+                self.player_score += 1
+                return True
+            else:
+                print("Incorrect. This is not a valid set.")
+                return False
+        except ValueError:
+            print("Invalid input. Please enter numbers separated by commas.")
+            return False
+        except IndexError:
+            print("Invalid input. Please enter valid card numbers.")
+            return False
+            
+
+#############
 
 
     def run(self):
@@ -116,6 +168,13 @@ class Game:
             self.check_for_sets()
             self.draw_cards()
             self.clock.tick(30) 
+
+            if self.timer.counter == 0:
+                if self.get_user_input():
+                    for i in range(3):
+                        self.selected_cards[i] = random.choice(self.all_cards)
+                self.timer_expired()
+
         
         pygame.quit()
 
@@ -125,16 +184,3 @@ if __name__ == "__main__":
     game.run()
 
     
-
-
-
-
-
-
-
-
-
-
-
-
-

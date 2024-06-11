@@ -20,7 +20,7 @@ class CountdownTimer:
                 self.callback()
 
     def draw(self, window):
-        window.blit(self.text, (10, 10))
+        window.blit(self.text, (window.get_width() - 150, 10))
 
 
 class Game:

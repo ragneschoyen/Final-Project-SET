@@ -118,9 +118,8 @@ class Game:
 #############
 
     def get_user_input(self):
-        user_input = input("Enter a set (e.g., '1, 5, 10'): ")
         try:
-            indices = [int(i) - 1 for i in user_input.split(',')]
+            indices = [int(i) - 1 for i in self.user_input.split(',')]
             if len(indices) != 3:
                 print("Please enter exactly three numbers.")
                 return False

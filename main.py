@@ -27,8 +27,8 @@ class Game:
     def __init__(self):
         pygame.init()
 
-        self.screen_width = 1200  # Fixed typo: 'screen_with' to 'screen_width'
-        self.screen_height = 600
+        self.screen_width = 850  # Fixed typo: 'screen_with' to 'screen_width'
+        self.screen_height = 800
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         pygame.display.set_caption("SET Game")
 
@@ -73,8 +73,8 @@ class Game:
         self.screen.fill((255, 255, 255))
 
         # Draw cards on the screen
-        num_rows = 3
-        num_cols = 4
+        num_rows = 4
+        num_cols = 3
         card_width = 100  # Adjust as needed
         card_height = 150  # Adjust as needed
         margin_x = 20  # Adjust as needed

@@ -72,7 +72,6 @@ class Game:
         card_height = 150  # Adjust as needed
         margin_x = 20  # Adjust as needed
         margin_y = 20  # Adjust as needed
-        top_margin = 100
 
         for i, card in enumerate(self.selected_cards):
             row = i // num_cols  # Calculate current row
@@ -80,7 +79,7 @@ class Game:
 
             # Calculate x and y position for the current card
             x = margin_x + col * (card_width + margin_x)
-            y = top_margin + row * (card_height + margin_y)
+            y = margin_y + row * (card_height + margin_y)
 
             # Load the image for the card
             card_image = pygame.image.load(f"kaarten/{card.image_name}")

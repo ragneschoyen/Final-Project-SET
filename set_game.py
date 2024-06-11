@@ -81,31 +81,3 @@ def create_all_cards():
     
     return all_cards
 
-
-"""# Load card images
-def load_card_images(cards):
-    card_images = {}
-    for card in cards:
-        try:
-            card_images[card.image_name] = pygame.image.load(f"kaarten/{card.image_name}")
-        except pygame.error as e:
-            print(f"Error loading image {card.image_name}: {e}")
-    return card_images
-
-# Create all cards
-all_cards = create_all_cards()
-
-# Print all cards to verify they have the correct image names
-for card in all_cards:
-    print(card)
-
-# Load all card images
-card_images = load_card_images(all_cards)"""
-
-
-
-
-
-
-
-

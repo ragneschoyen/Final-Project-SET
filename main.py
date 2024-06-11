@@ -20,7 +20,7 @@ class CountdownTimer:
                 self.callback()
 
     def draw(self, window):
-        window.blit(self.text, (window.get_width() - 150, 10))
+        window.blit(self.text, (window.get_width() - 275, 10))
 
 
 class Game:
@@ -79,7 +79,7 @@ class Game:
         card_height = 150  # Adjust as needed
         margin_x = 20  # Adjust as needed
         margin_y = 20  # Adjust as needed
-        top_margin = 100
+        top_margin = 75
 
         for i, card in enumerate(self.selected_cards):
             row = i // num_cols  # Calculate current row
@@ -104,10 +104,10 @@ class Game:
 
         self.timer.draw(self.screen)
         user_input_text = self.font.render(f"Input: {self.user_input}", True, (0, 0, 0))
-        self.screen.blit(user_input_text, (10, 100))
+        self.screen.blit(user_input_text, (10, self.screen_height - 60))
 
         score_text = self.font.render(f"Player: {self.player_score}  Computer: {self.computer_score}", True, (0, 0, 0))
-        self.screen.blit(score_text, (10, 50))
+        self.screen.blit(score_text, (10, 15))
 
         # Update display
         pygame.display.flip()

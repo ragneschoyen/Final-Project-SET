@@ -3,6 +3,8 @@ import set_game
 import random
 import time
 
+## HVIS DU SER DETTE FUNKA D!!!!!!!!
+
 class CountdownTimer:
     def __init__(self, duration, callback):
         self.counter = duration

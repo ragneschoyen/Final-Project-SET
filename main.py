@@ -186,6 +186,7 @@ class Game:
         except IndexError:
             self.add_message("Invalid input. Please enter valid card numbers.")
             print("Invalid input. Please enter valid card numbers.")
+            self.user_input = ""
             return False
 
     #############

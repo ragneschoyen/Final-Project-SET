@@ -9,19 +9,19 @@ class CountdownTimer:
         self.counter = duration
         self.callback = callback
         self.font = pygame.font.SysFont(None, 100)
-        self.text = self.font.render(str(self.counter), True, (0, 128, 0))
+        self.text = self.font.render(str(self.counter), True, (200, 70, 140))
         pygame.time.set_timer(pygame.USEREVENT, 1000)
 
     def update(self, event):
         if event.type == pygame.USEREVENT:
             self.counter -= 1
-            self.text = self.font.render(str(self.counter), True, (0, 128, 0))
+            self.text = self.font.render(str(self.counter), True, (200, 70, 140))
             if self.counter <= 0:
                 pygame.time.set_timer(pygame.USEREVENT, 0)
                 self.callback()
 
     def draw(self, window):
-        window.blit(self.text, (window.get_width() - 150, 10))
+        window.blit(self.text, (window.get_width() - 100, 10))
 
 
 class Game:
@@ -59,7 +59,7 @@ class Game:
     def timer_expired(self):
         sets_found = set_game.find_all_sets(self.selected_cards)
         if sets_found:
-            self.add_message("Oh no! Time is up:(\nComputer found a set!")
+            self.add_message("Oh no! Time is up:(\nComputer found a set!\nTry again:)")
             print("Computer found a set!")
             self.computer_score += 1
             self.replace_all_cards()

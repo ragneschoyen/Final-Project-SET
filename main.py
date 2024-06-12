@@ -41,6 +41,7 @@ class Game:
         self.timer = CountdownTimer(30, self.timer_expired)
         self.player_score = 0
         self.computer_score = 0
+        self.round_counter = 1  # Initialize round counter
         self.font = pygame.font.SysFont(None, 40)
         self.user_input = ""
 
@@ -67,6 +68,7 @@ class Game:
             self.add_message("No sets found.\nReplacing top 3 cards.")
             print("No sets found. Replacing top 3 cards.")
             self.replace_top_3_cards()
+        self.round_counter += 1
         self.timer = CountdownTimer(30, self.timer_expired)  # Reset the timer
         self.draw_cards()
 
@@ -117,6 +119,9 @@ class Game:
 
         score_text = self.font.render(f"Player: {self.player_score}  Computer: {self.computer_score}", True, (0, 0, 0))
         self.screen.blit(score_text, (10, 15))
+
+        round_text = self.font.render(f"Round: {self.round_counter}", True, (0, 0, 0))
+        self.screen.blit(round_text, (725, 70))
 
     # Draw the message log
         current_time = time.time()
@@ -169,9 +174,10 @@ class Game:
                 return False
             selected_cards = [self.selected_cards[i] for i in indices]
             if set_game.is_set(*selected_cards):
-                self.add_message("Correct! You've\nfound a set.")
-                print("Correct! You've found a set.")
+                self.add_message("Correct! You\nfound a set!")
+                print("Correct! You found a set.")
                 self.player_score += 1
+                self.round_counter += 1
                 self.replace_all_cards()
                 self.user_input = ""
                 self.timer = CountdownTimer(30, self.timer_expired)

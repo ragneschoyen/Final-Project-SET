@@ -1,24 +1,27 @@
-import itertools
+# This file includes a class for the cards in the SET game, aswell as several functions like generating all possible cards
+# These functions are used in the main.py file 
+
+import itertools # Necessary import 
 
 # Class representing a card in the SET game
 class SetCards:
-    # Initialize the card with four properties: number, symbol, color, and shading
+    # Initialize the card with five properties: number, symbol, color, shading, and image_name
     def __init__(self, color, symbol, shading, number, image_name):
         self.color = color # red, green, or purple
         self.symbol = symbol # ⋄, ∼, ◦
         self.shading = shading # solid, striped, or open
         self.number = number # 1, 2, or 3
-        self.image_name = image_name # to link card to image
+        self.image_name = image_name # to link card to image file 
 
+    # Return a string representation of the card - used for debugging
     def __repr__(self): 
-        # Return a string representation of the card
         return f"Card({self.color}, {self.symbol}, {self.shading}, {self.number}, {self.image_name})"
     
+    # Define equality comparison between two cards based on their properties
     def __eq__(self, other):
-        # Define equality comparison between two cards based on their properties
         return (self.color == other.color and
                 self.symbol == other.symbol and
-                self.shading == other.shading and     #KAN EVT DROPPAS ????????
+                self.shading == other.shading and     
                 self.number == other.number)
     
 
@@ -33,6 +36,7 @@ def is_set(card_1, card_2, card_3):
             return False
     return True
 
+
 # Function to find all sets
 def find_all_sets(cards):
     sets_found = []
@@ -45,6 +49,7 @@ def find_all_sets(cards):
             sets_found.append((card_1, card_2, card_3))
 
     return sets_found
+
 
 # Function to find one (first) set
 def find_one_set(cards):
@@ -59,7 +64,7 @@ def find_one_set(cards):
     return None
 
 
-# generate image names 
+# Generate image names to match with the name of the picture files (e.g. greendiamondempty1.gif)
 def create_image_name():
     colors = ['red', 'green', 'purple']
     shapes = ['oval', 'diamond', 'squiggle']
@@ -68,9 +73,11 @@ def create_image_name():
 
     combinations = list(itertools.product(colors, shapes, shadings, numbers))
     image_names = [(color, shape, shading, number, f"{color}{shape}{shading}{number}.gif") for color, shape, shading, number in combinations]
+    
     return image_names
 
-# generate the actual cards with the image names 
+
+# Generate the actual cards with the corresponding image names 
 def create_all_cards():
     image_data = create_image_name()
     all_cards = []

@@ -121,12 +121,6 @@ class Game:
             available_cards.append(self.selected_cards[i].image_name)
         self.draw_cards()
 
-    '''# Fucntion to replace top 3 cards in the game
-    def replace_top_3_cards(self):
-        for i in range(3):
-            self.selected_cards[i] = random.choice(self.all_cards)
-        self.draw_cards()'''
-
 
     # Function to get user input and check if set is valid
     def get_user_input(self):
@@ -248,7 +242,7 @@ class Game:
         pygame.quit()
 
 
-# Run the game:
+# Run the game
 if __name__ == "__main__":
     game = Game()
     game.run()

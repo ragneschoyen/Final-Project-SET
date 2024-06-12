@@ -5,21 +5,20 @@ import itertools # Necessary import
 
 # Class representing a card in the SET game
 class SetCards:
-    # Initialize the card with four properties: number, symbol, color, and shading
+    # Initialize the card with five properties: number, symbol, color, shading, and image_name
     def __init__(self, color, symbol, shading, number, image_name):
         self.color = color # red, green, or purple
         self.symbol = symbol # ⋄, ∼, ◦
         self.shading = shading # solid, striped, or open
         self.number = number # 1, 2, or 3
-        self.image_name = image_name # to link card to image
+        self.image_name = image_name # to link card to image file 
 
+    # Return a string representation of the card - used for debugging
     def __repr__(self): 
-        # Return a string representation of the card
-        # Used for debugging
         return f"Card({self.color}, {self.symbol}, {self.shading}, {self.number}, {self.image_name})"
     
+    # Define equality comparison between two cards based on their properties
     def __eq__(self, other):
-        # Define equality comparison between two cards based on their properties
         return (self.color == other.color and
                 self.symbol == other.symbol and
                 self.shading == other.shading and     
@@ -74,6 +73,7 @@ def create_image_name():
 
     combinations = list(itertools.product(colors, shapes, shadings, numbers))
     image_names = [(color, shape, shading, number, f"{color}{shape}{shading}{number}.gif") for color, shape, shading, number in combinations]
+    
     return image_names
 
 

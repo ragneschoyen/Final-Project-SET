@@ -90,6 +90,6 @@ def create_all_cards():
     for color, shape, shading, number, image_name in image_data:
         card =  SetCards(color, shape, shading, number, image_name)
         all_cards.append(card)
-    
+
     return all_cards
 

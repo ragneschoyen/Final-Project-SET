@@ -234,7 +234,7 @@ class Game:
                 self.timer.update(event)
 
             self.draw_elemets()
-            self.clock.tick(30)
+            self.clock.tick(60)
 
             if self.round_counter > 15:
                 self.game_over()

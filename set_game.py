@@ -1,4 +1,4 @@
-import itertools
+import itertools # Necessary import 
 
 # Class representing a card in the SET game
 class SetCards:
@@ -18,7 +18,7 @@ class SetCards:
         # Define equality comparison between two cards based on their properties
         return (self.color == other.color and
                 self.symbol == other.symbol and
-                self.shading == other.shading and     #KAN EVT DROPPAS ????????
+                self.shading == other.shading and     
                 self.number == other.number)
     
 

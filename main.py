@@ -26,7 +26,6 @@ class CountdownTimer:
 class Game:
     def __init__(self):
         pygame.init()
-
         self.screen_width = 850  # Fixed typo: 'screen_with' to 'screen_width'
         self.screen_height = 800
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
@@ -109,8 +108,10 @@ class Game:
         score_text = self.font.render(f"Player: {self.player_score}  Computer: {self.computer_score}", True, (0, 0, 0))
         self.screen.blit(score_text, (10, 15))
 
+
         # Update display
         pygame.display.flip()
+    
 
     def check_for_sets(self):
         sets_found = set_game.find_all_sets(self.selected_cards)

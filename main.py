@@ -122,10 +122,18 @@ class Game:
         current_time = time.time()
         self.message_log = [(msg, ts) for msg, ts in self.message_log if current_time - ts < 5]  # Remove old messages
 
-        for i, (message, _) in enumerate(self.message_log):
-            message_text = self.font.render(str(message), True, (0, 0, 0))  # Ensure message is a string
-            self.screen.blit(message_text, (10, self.screen_height - 120 - i * 30))
+    # Calculate the starting position for the messages
+        message_start_x = self.screen_width - 425  # Adjust as needed to center horizontally on the right side
+        message_start_y = (self.screen_height - (len(self.message_log) * 30)) // 2  # Center vertically
 
+        max_line_length = 27  # Maximum length of each line (adjust as needed)
+
+        for i, (message, _) in enumerate(self.message_log):
+            message_lines = [message[j:j+max_line_length] for j in range(0, len(message), max_line_length)]
+            for line_index, line in enumerate(message_lines):
+                message_text = self.font.render(str(line), True, (0, 0, 0))  # Ensure message is a string
+                message_pos_y = message_start_y + i * 60 + line_index * 30  # Adjust vertical position for each line
+                self.screen.blit(message_text, (message_start_x, message_pos_y))
 
         # Update display
         pygame.display.flip()

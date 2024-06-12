@@ -112,7 +112,7 @@ class Game:
 
         self.timer.draw(self.screen)
         user_input_text = self.font.render(f"Input: {self.user_input}", True, (0, 0, 0))
-        self.screen.blit(user_input_text, (10, 100))
+        self.screen.blit(user_input_text, (10, self.screen_height - 60))
 
         score_text = self.font.render(f"Player: {self.player_score}  Computer: {self.computer_score}", True, (0, 0, 0))
         self.screen.blit(score_text, (10, 15))

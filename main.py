@@ -59,12 +59,12 @@ class Game:
     def timer_expired(self):
         sets_found = set_game.find_all_sets(self.selected_cards)
         if sets_found:
-            self.add_message("Oh no! Time is up:( Computer found a set!")
+            self.add_message("Oh no! Time is up:(\nComputer found a set!")
             print("Computer found a set!")
             self.computer_score += 1
             self.replace_all_cards()
         else:
-            self.add_message("No sets found. Replacing top 3 cards.")
+            self.add_message("No sets found.\nReplacing top 3 cards.")
             print("No sets found. Replacing top 3 cards.")
             self.replace_top_3_cards()
         self.timer = CountdownTimer(30, self.timer_expired)  # Reset the timer
@@ -88,7 +88,7 @@ class Game:
         card_height = 150  # Adjust as needed
         margin_x = 20  # Adjust as needed
         margin_y = 20  # Adjust as needed
-        top_margin = 100
+        top_margin = 80
 
         for i, card in enumerate(self.selected_cards):
             row = i // num_cols  # Calculate current row
@@ -123,17 +123,16 @@ class Game:
         self.message_log = [(msg, ts) for msg, ts in self.message_log if current_time - ts < 5]  # Remove old messages
 
     # Calculate the starting position for the messages
-        message_start_x = self.screen_width - 425  # Adjust as needed to center horizontally on the right side
+        message_start_x = self.screen_width - 450  # Adjust as needed to center horizontally on the right side
         message_start_y = (self.screen_height - (len(self.message_log) * 30)) // 2  # Center vertically
 
-        max_line_length = 27  # Maximum length of each line (adjust as needed)
 
         for i, (message, _) in enumerate(self.message_log):
-            message_lines = [message[j:j+max_line_length] for j in range(0, len(message), max_line_length)]
-            for line_index, line in enumerate(message_lines):
-                message_text = self.font.render(str(line), True, (0, 0, 0))  # Ensure message is a string
-                message_pos_y = message_start_y + i * 60 + line_index * 30  # Adjust vertical position for each line
-                self.screen.blit(message_text, (message_start_x, message_pos_y))
+                message_lines = message.split('\n')
+                for line_index, line in enumerate(message_lines):
+                    message_text = self.font.render(line, True, (0, 0, 0))  # Ensure message is a string
+                    message_pos_y = message_start_y + i * 60 + line_index * 30  # Adjust vertical position for each line
+                    self.screen.blit(message_text, (message_start_x, message_pos_y))
 
         # Update display
         pygame.display.flip()
@@ -156,7 +155,7 @@ class Game:
 
     def get_user_input(self):
         if ',' not in self.user_input:
-            self.add_message("Invalid input. Please enter numbers separated by commas.")
+            self.add_message("Invalid input. Please enter\nnumbers separated by commas.")
             print("Invalid input. Please enter numbers separated by commas.")
             self.user_input = ""
             return False
@@ -164,12 +163,13 @@ class Game:
         try:
             indices = [int(i) - 1 for i in self.user_input.split(',')]
             if len(indices) != 3:
-                self.add_message("Please enter exactly three numbers.")
+                self.add_message("Please enter exactly\nthree numbers.")
                 print("Please enter exactly three numbers.")
+                self.user_input = ""
                 return False
             selected_cards = [self.selected_cards[i] for i in indices]
             if set_game.is_set(*selected_cards):
-                self.add_message("Correct! You've found a set.")
+                self.add_message("Correct! You've\nfound a set.")
                 print("Correct! You've found a set.")
                 self.player_score += 1
                 self.replace_all_cards()
@@ -177,16 +177,17 @@ class Game:
                 self.timer = CountdownTimer(30, self.timer_expired)
                 return True
             else:
-                self.add_message("Incorrect. This is not a valid set.")
+                self.add_message("Incorrect. This\nis not a valid set.")
                 print("Incorrect. This is not a valid set.")
                 self.user_input = ""
                 return False
         except ValueError:
-            self.add_message("Invalid input. Please enter numbers separated by commas.")
+            self.add_message("Invalid input. Please enter\nnumbers separated by commas.")
             print("Invalid input. Please enter numbers separated by commas.")
+            self.user_input = ""
             return False
         except IndexError:
-            self.add_message("Invalid input. Please enter valid card numbers.")
+            self.add_message("Invalid input. Please enter\nvalid card numbers.")
             print("Invalid input. Please enter valid card numbers.")
             self.user_input = ""
             return False

@@ -1,3 +1,6 @@
+# This file includes a class for the cards in the SET game, aswell as several functions like generating all possible cards
+# These functions are used in the main.py file 
+
 import itertools # Necessary import 
 
 # Class representing a card in the SET game
@@ -12,6 +15,7 @@ class SetCards:
 
     def __repr__(self): 
         # Return a string representation of the card
+        # Used for debugging
         return f"Card({self.color}, {self.symbol}, {self.shading}, {self.number}, {self.image_name})"
     
     def __eq__(self, other):
@@ -33,6 +37,7 @@ def is_set(card_1, card_2, card_3):
             return False
     return True
 
+
 # Function to find all sets
 def find_all_sets(cards):
     sets_found = []
@@ -45,6 +50,7 @@ def find_all_sets(cards):
             sets_found.append((card_1, card_2, card_3))
 
     return sets_found
+
 
 # Function to find one (first) set
 def find_one_set(cards):
@@ -59,7 +65,7 @@ def find_one_set(cards):
     return None
 
 
-# generate image names 
+# Generate image names to match with the name of the picture files (e.g. greendiamondempty1.gif)
 def create_image_name():
     colors = ['red', 'green', 'purple']
     shapes = ['oval', 'diamond', 'squiggle']
@@ -70,7 +76,8 @@ def create_image_name():
     image_names = [(color, shape, shading, number, f"{color}{shape}{shading}{number}.gif") for color, shape, shading, number in combinations]
     return image_names
 
-# generate the actual cards with the image names 
+
+# Generate the actual cards with the corresponding image names 
 def create_all_cards():
     image_data = create_image_name()
     all_cards = []

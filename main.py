@@ -20,12 +20,13 @@ class CountdownTimer:
                 self.callback()
 
     def draw(self, window):
-        window.blit(self.text, (window.get_width() - 275, 10))
+        window.blit(self.text, (window.get_width() - 150, 10))
 
 
 class Game:
     def __init__(self):
         pygame.init()
+
         self.screen_width = 850  # Fixed typo: 'screen_with' to 'screen_width'
         self.screen_height = 800
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
@@ -49,14 +50,13 @@ class Game:
 
     def timer_expired(self):
         sets_found = set_game.find_all_sets(self.selected_cards)
-        if not self.get_user_input():
-            if sets_found:
-                print("Computer found a set!")
-                self.computer_score += 1
-                self.replace_all_cards()
-            else:
-                print("No sets found. Replacing top 3 cards.")
-                self.replace_top_3_cards()
+        if sets_found:
+            print("Computer found a set!")
+            self.computer_score += 1
+            self.replace_all_cards()
+        else:
+            print("No sets found. Replacing top 3 cards.")
+            self.replace_top_3_cards()
         self.timer = CountdownTimer(30, self.timer_expired)  # Reset the timer
         self.draw_cards()
 
@@ -78,7 +78,7 @@ class Game:
         card_height = 150  # Adjust as needed
         margin_x = 20  # Adjust as needed
         margin_y = 20  # Adjust as needed
-        top_margin = 75
+        top_margin = 100
 
         for i, card in enumerate(self.selected_cards):
             row = i // num_cols  # Calculate current row
@@ -103,15 +103,13 @@ class Game:
 
         self.timer.draw(self.screen)
         user_input_text = self.font.render(f"Input: {self.user_input}", True, (0, 0, 0))
-        self.screen.blit(user_input_text, (10, self.screen_height - 60))
+        self.screen.blit(user_input_text, (10, 100))
 
         score_text = self.font.render(f"Player: {self.player_score}  Computer: {self.computer_score}", True, (0, 0, 0))
-        self.screen.blit(score_text, (10, 15))
-
+        self.screen.blit(score_text, (10, 50))
 
         # Update display
         pygame.display.flip()
-    
 
     def check_for_sets(self):
         sets_found = set_game.find_all_sets(self.selected_cards)
@@ -141,6 +139,7 @@ class Game:
                 self.player_score += 1
                 self.replace_all_cards()
                 self.user_input = ""
+                self.timer = CountdownTimer(30, self.timer_expired)
                 return True
             else:
                 print("Incorrect. This is not a valid set.")
@@ -166,7 +165,7 @@ class Game:
                     self.running = False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN:
-                        self.timer_expired()
+                        self.get_user_input()
                     elif event.key == pygame.K_BACKSPACE:
                         self.user_input = self.user_input[:-1]
                     else:

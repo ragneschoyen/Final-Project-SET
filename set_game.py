@@ -1,7 +1,8 @@
-# This file includes a class for the cards in the SET game, aswell as several functions like generating all possible cards
+# This file includes a class for the cards in the SET game, as well as several functions like generating all possible cards
 # These functions are used in the main.py file 
 
-import itertools # Necessary import 
+# Necessary import 
+import itertools 
 
 # Class representing a card in the SET game
 class SetCards:
@@ -25,7 +26,7 @@ class SetCards:
                 self.number == other.number)
     
 
-# Function for checking if three cards is a set 
+# Function for checking if three cards make a set 
 def is_set(card_1, card_2, card_3):
     for attribute in ['color', 'symbol', 'shading', 'number']:
         value_1 = getattr(card_1, attribute)

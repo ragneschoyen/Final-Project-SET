@@ -233,7 +233,7 @@ class Game:
             self.draw_cards()
             self.clock.tick(30)
 
-            if self.round_counter > 2:
+            if self.round_counter > 15:
                 self.game_over()
 
         pygame.quit()

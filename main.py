@@ -59,10 +59,12 @@ class Game:
     def timer_expired(self):
         sets_found = set_game.find_all_sets(self.selected_cards)
         if sets_found:
+            self.add_message("Oh no! Time is up:( Computer found a set!")
             print("Computer found a set!")
             self.computer_score += 1
             self.replace_all_cards()
         else:
+            self.add_message("No sets found. Replacing top 3 cards.")
             print("No sets found. Replacing top 3 cards.")
             self.replace_top_3_cards()
         self.timer = CountdownTimer(30, self.timer_expired)  # Reset the timer

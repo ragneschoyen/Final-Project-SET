@@ -90,7 +90,7 @@ class Game:
         card_height = 150  # Adjust as needed
         margin_x = 20  # Adjust as needed
         margin_y = 20  # Adjust as needed
-        top_margin = 80
+        top_margin = 110
 
         for i, card in enumerate(self.selected_cards):
             row = i // num_cols  # Calculate current row
@@ -114,8 +114,12 @@ class Game:
             self.screen.blit(card_number, (x, y))
 
         self.timer.draw(self.screen)
-        user_input_text = self.font.render(f"Input: {self.user_input}", True, (0, 0, 0))
-        self.screen.blit(user_input_text, (10, self.screen_height - 60))
+        prefix_text = self.font.render("Input: ", True, (0, 0, 0))  # Render prefix text in default color
+        self.screen.blit(prefix_text, (10, 60))
+
+        # Render user input text in pink color
+        input_text = self.font.render(self.user_input, True, (200, 70, 140))
+        self.screen.blit(input_text, (10 + prefix_text.get_width(), 60))  # Position input text relative to prefix text
 
         score_text = self.font.render(f"Player: {self.player_score}  Computer: {self.computer_score}", True, (0, 0, 0))
         self.screen.blit(score_text, (10, 15))

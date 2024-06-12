@@ -1,9 +1,11 @@
+# Necessary imports
 import pygame
 import set_game
 import random
 import time
 
 
+# 
 class CountdownTimer:
     def __init__(self, duration, callback):
         self.counter = duration
@@ -36,7 +38,6 @@ class Game:
         self.clock = pygame.time.Clock()
         self.all_cards = set_game.create_all_cards()
         self.selected_cards = []
-        self.card_objects = []
 
         self.timer = CountdownTimer(30, self.timer_expired)
         self.player_score = 0
@@ -44,7 +45,6 @@ class Game:
         self.round_counter = 1  # Initialize round counter
         self.font = pygame.font.SysFont(None, 40)
         self.user_input = ""
-
         self.message_log = []
 
     def add_message(self, message):
@@ -52,8 +52,25 @@ class Game:
         self.message_log.append((str(message), timestamp))  # Ensure message is a string
 
     def game_over(self):
-        self.add_message("Game Over!")
-        print("Game Over!")
+        if self.player_score > self.computer_score:
+            winner_message = "You won:)"
+        elif self.player_score < self.computer_score:
+            winner_message = "Computer won:("
+        else:
+            winner_message = "It's a tie!"
+
+        
+        pygame.time.delay(3000)
+        game_over_font = pygame.font.SysFont(None, 120)
+        game_over_text = game_over_font.render("Game Over!", True, (255, 0, 0))
+        winner_text = game_over_font.render(winner_message, True, (0, 0, 0))
+        self.screen.fill((255, 255, 255))
+        text_rect = game_over_text.get_rect(center=(self.screen_width // 2, self.screen_height // 2))
+        winner_rect = winner_text.get_rect(center=(self.screen_width // 2, self.screen_height // 2 + 100))
+        self.screen.blit(game_over_text, text_rect)
+        self.screen.blit(winner_text, winner_rect)
+        pygame.display.flip()
+        pygame.time.delay(4000)
         pygame.quit()
         exit()
 
@@ -61,12 +78,10 @@ class Game:
         sets_found = set_game.find_all_sets(self.selected_cards)
         if sets_found:
             self.add_message("Oh no! Time is up:(\nComputer found a set!\nTry again:)")
-            print("Computer found a set!")
             self.computer_score += 1
             self.replace_all_cards()
         else:
             self.add_message("No sets found.\nReplacing top 3 cards.")
-            print("No sets found. Replacing top 3 cards.")
             self.replace_top_3_cards()
         self.round_counter += 1
         self.timer = CountdownTimer(30, self.timer_expired)  # Reset the timer
@@ -146,26 +161,17 @@ class Game:
         # Update display
         pygame.display.flip()
 
-    def check_for_sets(self):
-        sets_found = set_game.find_all_sets(self.selected_cards)
-        if sets_found:
-            print("Sets found:")
-            for i, set_found in enumerate(sets_found):
-                print(f"Set {i + 1}: {set_found}")
-        else:
-            print("No sets found.")
 
     def replace_top_3_cards(self):
         for i in range(3):
             self.selected_cards[i] = random.choice(self.all_cards)
         self.draw_cards()
 
-    #############
+
 
     def get_user_input(self):
         if ',' not in self.user_input:
             self.add_message("Invalid input. Please enter\nnumbers separated by commas.")
-            print("Invalid input. Please enter numbers separated by commas.")
             self.user_input = ""
             return False
 
@@ -173,13 +179,11 @@ class Game:
             indices = [int(i) - 1 for i in self.user_input.split(',')]
             if len(indices) != 3:
                 self.add_message("Please enter exactly\nthree numbers.")
-                print("Please enter exactly three numbers.")
                 self.user_input = ""
                 return False
             selected_cards = [self.selected_cards[i] for i in indices]
             if set_game.is_set(*selected_cards):
                 self.add_message("Correct! You\nfound a set!")
-                print("Correct! You found a set.")
                 self.player_score += 1
                 self.round_counter += 1
                 self.replace_all_cards()
@@ -188,21 +192,18 @@ class Game:
                 return True
             else:
                 self.add_message("Incorrect. This\nis not a valid set.")
-                print("Incorrect. This is not a valid set.")
                 self.user_input = ""
                 return False
         except ValueError:
             self.add_message("Invalid input. Please enter\nnumbers separated by commas.")
-            print("Invalid input. Please enter numbers separated by commas.")
             self.user_input = ""
             return False
         except IndexError:
             self.add_message("Invalid input. Please enter\nvalid card numbers.")
-            print("Invalid input. Please enter valid card numbers.")
             self.user_input = ""
             return False
 
-    #############
+
 
     def run(self):
         self.running = True
@@ -225,6 +226,9 @@ class Game:
 
             self.draw_cards()
             self.clock.tick(30)
+
+            if self.round_counter > 2:
+                self.game_over()
 
         pygame.quit()
 

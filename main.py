@@ -1,6 +1,7 @@
 import pygame
 import set_game
 import random
+import time
 
 
 class CountdownTimer:
@@ -43,20 +44,28 @@ class Game:
         self.font = pygame.font.SysFont(None, 40)
         self.user_input = ""
 
+        self.message_log = []
+
+    def add_message(self, message):
+        timestamp = time.time()  # Get the current time
+        self.message_log.append((str(message), timestamp))  # Ensure message is a string
+
     def game_over(self):
+        self.add_message("Game Over!")
         print("Game Over!")
         pygame.quit()
         exit()
 
     def timer_expired(self):
         sets_found = set_game.find_all_sets(self.selected_cards)
-        if sets_found:
-            print("Computer found a set!")
-            self.computer_score += 1
-            self.replace_all_cards()
-        else:
-            print("No sets found. Replacing top 3 cards.")
-            self.replace_top_3_cards()
+        if not self.get_user_input():
+            if sets_found:
+                print("Computer found a set!")
+                self.computer_score += 1
+                self.replace_all_cards()
+            else:
+                print("No sets found. Replacing top 3 cards.")
+                self.replace_top_3_cards()
         self.timer = CountdownTimer(30, self.timer_expired)  # Reset the timer
         self.draw_cards()
 
@@ -106,7 +115,16 @@ class Game:
         self.screen.blit(user_input_text, (10, 100))
 
         score_text = self.font.render(f"Player: {self.player_score}  Computer: {self.computer_score}", True, (0, 0, 0))
-        self.screen.blit(score_text, (10, 50))
+        self.screen.blit(score_text, (10, 15))
+
+    # Draw the message log
+        current_time = time.time()
+        self.message_log = [(msg, ts) for msg, ts in self.message_log if current_time - ts < 5]  # Remove old messages
+
+        for i, (message, _) in enumerate(self.message_log):
+            message_text = self.font.render(str(message), True, (0, 0, 0))  # Ensure message is a string
+            self.screen.blit(message_text, (10, self.screen_height - 120 - i * 30))
+
 
         # Update display
         pygame.display.flip()
@@ -128,13 +146,21 @@ class Game:
     #############
 
     def get_user_input(self):
+        if ',' not in self.user_input:
+            self.add_message("Invalid input. Please enter numbers separated by commas.")
+            print("Invalid input. Please enter numbers separated by commas.")
+            self.user_input = ""
+            return False
+
         try:
             indices = [int(i) - 1 for i in self.user_input.split(',')]
             if len(indices) != 3:
+                self.add_message("Please enter exactly three numbers.")
                 print("Please enter exactly three numbers.")
                 return False
             selected_cards = [self.selected_cards[i] for i in indices]
             if set_game.is_set(*selected_cards):
+                self.add_message("Correct! You've found a set.")
                 print("Correct! You've found a set.")
                 self.player_score += 1
                 self.replace_all_cards()
@@ -142,13 +168,16 @@ class Game:
                 self.timer = CountdownTimer(30, self.timer_expired)
                 return True
             else:
+                self.add_message("Incorrect. This is not a valid set.")
                 print("Incorrect. This is not a valid set.")
                 self.user_input = ""
                 return False
         except ValueError:
+            self.add_message("Invalid input. Please enter numbers separated by commas.")
             print("Invalid input. Please enter numbers separated by commas.")
             return False
         except IndexError:
+            self.add_message("Invalid input. Please enter valid card numbers.")
             print("Invalid input. Please enter valid card numbers.")
             return False
 

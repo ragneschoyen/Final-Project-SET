@@ -58,14 +58,13 @@ class Game:
 
     def timer_expired(self):
         sets_found = set_game.find_all_sets(self.selected_cards)
-        if not self.get_user_input():
-            if sets_found:
-                print("Computer found a set!")
-                self.computer_score += 1
-                self.replace_all_cards()
-            else:
-                print("No sets found. Replacing top 3 cards.")
-                self.replace_top_3_cards()
+        if sets_found:
+            print("Computer found a set!")
+            self.computer_score += 1
+            self.replace_all_cards()
+        else:
+            print("No sets found. Replacing top 3 cards.")
+            self.replace_top_3_cards()
         self.timer = CountdownTimer(30, self.timer_expired)  # Reset the timer
         self.draw_cards()
 

@@ -114,9 +114,18 @@ class Game:
 
     # Fucntion to replace top 3 cards in the game
     def replace_top_3_cards(self):
+        cards_already_in_game = [card.image_name for card in self.selected_cards[:3]]
+        for i in range(3):
+            available_cards = [card for card in self.all_cards if card.image_name not in cards_already_in_game]
+            self.selected_cards[i] = random.choice(available_cards)
+            available_cards.append(self.selected_cards[i].image_name)
+        self.draw_cards()
+
+    '''# Fucntion to replace top 3 cards in the game
+    def replace_top_3_cards(self):
         for i in range(3):
             self.selected_cards[i] = random.choice(self.all_cards)
-        self.draw_cards()
+        self.draw_cards()'''
 
 
     # Function to get user input and check if set is valid
@@ -191,7 +200,7 @@ class Game:
         self.screen.blit(score_text, (10, 15))
 
         round_text = self.font.render(f"Round: {self.round_counter}", True, (0, 0, 0))
-        self.screen.blit(round_text, (725, 70))
+        self.screen.blit(round_text, (710, 70))
 
         # Draw the message log
         current_time = time.time()

@@ -35,6 +35,10 @@ def is_set(card_1, card_2, card_3):
 
         if not (value_1 == value_2 == value_3 or (value_1 != value_2 and value_2 != value_3 and value_1 != value_3)):
             return False
+        
+    if card_1 == card_2 == card_3:
+        return False
+    
     return True
 
 

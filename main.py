@@ -73,7 +73,7 @@ class Game:
             self.replace_top_3_cards()
         self.round_counter += 1
         self.timer = CountdownTimer(30, self.timer_expired)  # Reset the timer
-        self.draw_cards()
+        self.draw_elemets()
 
 
     # Function to handle game over event
@@ -110,7 +110,7 @@ class Game:
     # Fucntion ro replace all cards in the game with new ones
     def replace_all_cards(self):
         self.select_random_cards()
-        self.draw_cards()
+        self.draw_elemets()
 
     # Fucntion to replace top 3 cards in the game
     def replace_top_3_cards(self):
@@ -119,13 +119,7 @@ class Game:
             available_cards = [card for card in self.all_cards if card.image_name not in cards_already_in_game]
             self.selected_cards[i] = random.choice(available_cards)
             available_cards.append(self.selected_cards[i].image_name)
-        self.draw_cards()
-
-    '''# Fucntion to replace top 3 cards in the game
-    def replace_top_3_cards(self):
-        for i in range(3):
-            self.selected_cards[i] = random.choice(self.all_cards)
-        self.draw_cards()'''
+        self.draw_elemets()
 
 
     # Function to get user input and check if set is valid
@@ -165,7 +159,7 @@ class Game:
 
 
     # Function to draw all elements of the game screen
-    def draw_cards(self):
+    def draw_elemets(self):
         self.screen.fill((255, 255, 255))
 
         # Draw cards
@@ -223,7 +217,7 @@ class Game:
     def run(self):
         self.running = True
         self.select_random_cards()
-        self.draw_cards()
+        self.draw_elemets()
 
         while self.running:
             for event in pygame.event.get():
@@ -239,8 +233,8 @@ class Game:
 
                 self.timer.update(event)
 
-            self.draw_cards()
-            self.clock.tick(30)
+            self.draw_elemets()
+            self.clock.tick(60)
 
             if self.round_counter > 15:
                 self.game_over()
@@ -248,7 +242,7 @@ class Game:
         pygame.quit()
 
 
-# Run the game:
+# Run the game
 if __name__ == "__main__":
     game = Game()
     game.run()

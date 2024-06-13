@@ -41,7 +41,6 @@ def is_set(card_1, card_2, card_3):
     
     return True
 
-
 # Function to find all sets
 def find_all_sets(cards):
     sets_found = []

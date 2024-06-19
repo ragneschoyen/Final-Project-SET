@@ -29,7 +29,7 @@ python main.py
 ```
 
 ## Usage
-When you start the game, a Pygame window will open. The window will display 12 cards, you use your keyboard to input the number corresponding to the 3 cards you think is a SET. You will also see a timer counting down from 30, when the time is up, and you did not find a SET, you will see if the computer found one, if it did the coumputer gets a point and a new round starts. If you find a SET, before the time is up, you get a point and a new round starts. If there are no SETs on the table, the top three cards gets replaced, and the timer starts over. This goes on for 15 rounds, and then it is game over, and the winner of the game is displayed. 
+When you start the game, a Pygame window will open. The window will display 12 cards, you use your keyboard to input the number corresponding to the 3 cards you think is a SET. You will also see a timer counting down from 30, when the time is up, and you did not find a SET, you will see if the computer found one, if it did the coumputer gets a point and a new round starts. If you find a SET, before the time is up, you get a point and a new round starts. If there are no SETs on the table, the top three cards gets replaced, and the timer starts over. Each time a set is found either by the player or the computer, the set is replaced with 3 new cards. This goes on for 15 rounds, and then it is game over, and the winner of the game is displayed. 
 
 ## Contributing
 1. Fork the repository.

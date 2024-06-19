@@ -116,6 +116,7 @@ class Game:
             available_cards.append(self.selected_cards[i].image_name)
         self.draw_elements()
 
+    # Function to replace SET found by user
     def replace_set_cards(self, indices):
         cards_already_in_game = [card.image_name for card in self.selected_cards]
         for i in indices:
@@ -124,6 +125,7 @@ class Game:
             cards_already_in_game.append(self.selected_cards[i].image_name)
         self.draw_elements()
 
+    # Function to replace SET found by computer
     def replace_set(self, set_cards):
         indices = [self.selected_cards.index(card) for card in set_cards]
         self.replace_set_cards(indices)

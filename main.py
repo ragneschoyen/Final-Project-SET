@@ -67,13 +67,13 @@ class Game:
         if sets_found:
             self.add_message("Oh no! Time is up:(\nComputer found a set!\nTry again:)")
             self.computer_score += 1
-            self.replace_all_cards()
+            self.replace_set(sets_found[0])
         else:
             self.add_message("No sets found.\nReplacing top 3 cards.")
             self.replace_top_3_cards()
         self.round_counter += 1
         self.timer = CountdownTimer(30, self.timer_expired)  # Reset the timer
-        self.draw_elemets()
+        self.draw_elements()
 
 
     # Function to handle game over event
@@ -103,23 +103,30 @@ class Game:
         exit()
     
 
-    # Fucntion to select a random set of 12 cards for the game
+    # Function to select a random set of 12 cards for the game
     def select_random_cards(self, num_cards=12):
         self.selected_cards = random.sample(self.all_cards, num_cards)
 
-    # Fucntion ro replace all cards in the game with new ones
-    def replace_all_cards(self):
-        self.select_random_cards()
-        self.draw_elemets()
-
-    # Fucntion to replace top 3 cards in the game
+    # Function to replace top 3 cards in the game
     def replace_top_3_cards(self):
         cards_already_in_game = [card.image_name for card in self.selected_cards[:3]]
         for i in range(3):
             available_cards = [card for card in self.all_cards if card.image_name not in cards_already_in_game]
             self.selected_cards[i] = random.choice(available_cards)
             available_cards.append(self.selected_cards[i].image_name)
-        self.draw_elemets()
+        self.draw_elements()
+
+    def replace_set_cards(self, indices):
+        cards_already_in_game = [card.image_name for card in self.selected_cards]
+        for i in indices:
+            available_cards = [card for card in self.all_cards if card.image_name not in cards_already_in_game]
+            self.selected_cards[i] = random.choice(available_cards)
+            cards_already_in_game.append(self.selected_cards[i].image_name)
+        self.draw_elements()
+
+    def replace_set(self, set_cards):
+        indices = [self.selected_cards.index(card) for card in set_cards]
+        self.replace_set_cards(indices)
 
 
     # Function to get user input and check if set is valid
@@ -138,9 +145,10 @@ class Game:
             selected_cards = [self.selected_cards[i] for i in indices]
             if set_game.is_set(*selected_cards):
                 self.add_message("Correct! You\nfound a set!")
+
+                self.replace_set_cards(indices)
                 self.player_score += 1
                 self.round_counter += 1
-                self.replace_all_cards()
                 self.user_input = ""
                 self.timer = CountdownTimer(30, self.timer_expired)
                 return True
@@ -159,7 +167,7 @@ class Game:
 
 
     # Function to draw all elements of the game screen
-    def draw_elemets(self):
+    def draw_elements(self):
         self.screen.fill((255, 255, 255))
 
         # Draw cards
@@ -217,7 +225,7 @@ class Game:
     def run(self):
         self.running = True
         self.select_random_cards()
-        self.draw_elemets()
+        self.draw_elements()
 
         while self.running:
             for event in pygame.event.get():
@@ -233,7 +241,7 @@ class Game:
 
                 self.timer.update(event)
 
-            self.draw_elemets()
+            self.draw_elements()
             self.clock.tick(60)
 
             if self.round_counter > 15:

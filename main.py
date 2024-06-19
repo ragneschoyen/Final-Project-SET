@@ -129,6 +129,8 @@ class Game:
         self.replace_set_cards(indices)
 
 
+
+
     # Function to get user input and check if set is valid
     def get_user_input(self):
         if ',' not in self.user_input:
